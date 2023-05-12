@@ -29,9 +29,17 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
 
-    bred_for: {
-      type: DataTypes.TEXT,
+    life_span: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
+
+    image: {
+      type: DataTypes.JSON,
+      allowNull: false,
+    }
+
+  }, {
+    timestamps: false,
   });
 };
