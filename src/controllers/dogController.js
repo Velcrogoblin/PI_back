@@ -1,6 +1,4 @@
 const { Dog, Op } = require("../db");
-const axios = require ("axios");
-
 
 
 const createDog = async (req, res) => {
@@ -36,15 +34,18 @@ const createDog = async (req, res) => {
 
 const getAllDogs = async (req, res) => {
     try{
-        let response = await axios.get("https://api.thedogapi.com/v1/breeds");
-        const dogsReturned = response.data;
-        
-        return res.status(200).json(dogsReturned);
+        let response = await Dog.findAll();
+        return res.status(200).json(response);
     } catch(error) {
         return res.status(500).json({error: error.message});
     }
     
 };
+
+
+
+
+
 
 const getDogByName = async (req, res) => {
     try {

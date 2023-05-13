@@ -1,52 +1,64 @@
 const {Temper} = require("../db");
 const axios = require ("axios");
 
+ let dbTempers = [];
 
 const storeTempers = async (req, res) => {
-
-    let dbTempers = [];
-
-    try{
+    try {
         const response = await axios.get("https://api.thedogapi.com/v1/breeds");
-        const dogsReturned = response.data;
+        let dogsReturned = response.data.map(dog => dog.temperament).filter(temperament => temperament);
+        dogsReturned = dogsReturned.flat();
 
-        for( let i=0; i < dogsReturned.length; i++) {
-            let aux = dogsReturned[i].temperament;
-            let temperamentsFound = aux.split(", ");
-            temperamentsFound.forEach(e => dbTempers.push({temper_name: e}))
-          }
+        for( let i = 0; i < dogsReturned.length; i++) {
+            dbTempers.push(dogsReturned[i].split(", "))    
+        }
 
-        
-          const fillDbTempers = async () => {
-          try {
-            await Temper.bulkCreate(dbTempers);
-            console.log("Temperamentos cargados");
-          } catch (error) {
-            console.error(error)
-          }
-          
-          
-          };
-        
-    } catch(error) {
+        dbTempers = dbTempers.flat();
+        let temperaments = new Set(dbTempers);
+        dbTempers = Array.from(temperaments);
+
+        let allTempers = [];
+
+        for (let i = 0; i < dbTempers.length; i++) {
+            allTempers.push({temper_name: dbTempers[i]});
+        }
+
+
+        return res.status(200).json(allTempers);
+        } catch(error) {
         return res.status(500).json({error: error.message});
     }
 }
 
-const getAllTempers = async(req, res) => {
-    try{
+// const fillDbTempers = async () => {
+//     try {
+//       await Temper.bulkCreate(dbTempers);
+//       console.log("Temperamentos cargados");
+//     } catch (error) {
+//       console.error(error)
+//     }
+    
+    
+//     };
 
-        let response = Temper.findAll();
+// const getAllTempers = async(req, res) => {
+//     try{
 
-        if(response.length === 0) {
-            return res.status(400).json({message: "No tempers where found"});
-        }
+//         let response = Temper.findAll();
 
-        return res.status(200).json(response);
-    } catch(error) {
-        return res.status(500).json({message: error.message});
-    }
+//         if(response.length === 0) {
+//             return res.status(400).json({message: "No tempers where found"});
+//         }
+
+//         return res.status(200).json(response);
+//     } catch(error) {
+//         return res.status(500).json({message: error.message});
+//     }
+// }
+
+
+module.exports = {
+    storeTempers,
+    //getAllTempers,
+    //fillDbTempers,
 }
-
-
-module.exports = storeTempers

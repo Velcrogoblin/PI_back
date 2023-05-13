@@ -1,10 +1,10 @@
 const Router = require("express");
 const {createDog, getAllDogs, getDogByName, getDogById} = require("../controllers/dogController");
-
+const getAllDogsFromApi = require("../controllers/dogControllerApi");
 const router = Router();
 
 router
-.get("/", getAllDogs)
+.get("/", getAllDogsFromApi)
 .get("/id/:id", getDogById)
 .get("/name", getDogByName)
 .post("/", createDog);
