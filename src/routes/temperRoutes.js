@@ -1,9 +1,9 @@
 const Router = require("express");
-const {storeTempers} = require("../controllers/temperController");
+const {getAllTempers} = require("../controllers/temperController");
 
 const router = Router();
 
-router
-.get("/", storeTempers);
+ router
+.get("/", getAllTempers);
 
 module.exports = router;
