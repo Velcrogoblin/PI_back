@@ -52,9 +52,9 @@ const createDog = async (req, res) => {
 
 const getAllDogs = async (req, res) => {
     try{
-        let dbDogs = await Dog.findAll({include: {model: Temper}});
         let apiDogs = await axios.get(API_URL);
-        let allDogs = [...dbDogs, ...apiDogs.data];
+        let dbDogs = await Dog.findAll({include: {model: Temper}});
+        let allDogs = [...apiDogs.data, ...dbDogs];
 
         if(allDogs.length === 0) {
             return res.status(404).json({message: "No dogs where found"});
