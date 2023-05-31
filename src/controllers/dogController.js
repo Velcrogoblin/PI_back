@@ -107,7 +107,7 @@ const getDogById = async (req, res) => {
             return res.status(200).json(dbDogs);
         } else {
         let apiDogs = await axios.get(API_URL);
-        let apiFiltered = await apiDogs.data.find(dog => dog.id.toString() === id.toString());
+        let apiFiltered = apiDogs.data.find(dog => dog.id== id);
 
             if(apiFiltered.length === 0) {
                 return res.status(404).json({message: `Dog with id ${id} not found`});
