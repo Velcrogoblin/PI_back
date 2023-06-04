@@ -81,7 +81,7 @@ const getDogByName = async (req, res) => {
         });
 
         let apiDogs = await axios.get(API_URL);
-        let apiFiltered = await apiDogs.data.filter(dog => dog.name.toLowerCase() === name.toLowerCase());
+        let apiFiltered = await apiDogs.data.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
 
         let allDogs = [...dbDogs, ...apiFiltered];
             
