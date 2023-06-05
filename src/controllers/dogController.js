@@ -23,7 +23,7 @@ const createDog = async (req, res) => {
             return res.status(500).json({message: "There is missing information"});
         }
 
-        const temperDog = await Temper.findOne({where: { temper_name }});
+        const temperDog = await Temper.findAll({where: { temper_name }});
 
           if (!temperDog) {
             return res.status(404).json({ message: "Selected temper does not exist" });
