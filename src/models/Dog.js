@@ -22,6 +22,7 @@ module.exports = (sequelize) => {
     apodo: {
       type: DataTypes.STRING,
       allowNull: false,
+      //agrego
     },
 
     weight: {
