@@ -18,6 +18,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    
+    apodo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
     weight: {
       type: DataTypes.JSON,

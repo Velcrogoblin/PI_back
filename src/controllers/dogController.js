@@ -10,6 +10,7 @@ const createDog = async (req, res) => {
             life_span, 
             image,
             temper_name,
+            apodo,
         } = req.body;
 
         const dogFound = await Dog.findOne({where: { name }});
@@ -19,7 +20,7 @@ const createDog = async (req, res) => {
         }
 
 
-        if(!name || !weight || !height || !life_span || !image || !temper_name) {
+        if(!name || !weight || !height || !life_span || !image || !temper_name || !apodo) {
             return res.status(500).json({message: "There is missing information"});
         }
 
@@ -37,6 +38,7 @@ const createDog = async (req, res) => {
             height,
             life_span,
             image,
+            apodo,
         })
 
         await dogCreated.addTempers(temperDog);
